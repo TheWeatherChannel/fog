@@ -2,7 +2,7 @@ Shindo.tests("Fog::Compute[:aws] | monitor", ['aws']) do
 
   @instance = Fog::Compute[:aws].servers.new
 
-  [:addresses, :flavor, :key_pair, :key_pair=, :volumes].each do |association|
+  [:addresses, :flavor, :key_pair, :key_pair=, :volumes, :associate_public_ip].each do |association|
     responds_to(association)
   end
 
@@ -18,6 +18,16 @@ Shindo.tests("Fog::Compute[:aws] | monitor", ['aws']) do
       @instance.attributes[:monitoring] == false
     end
 
+    test('#associate_public_ip = true') do
+      @instance.associate_public_ip = true
+      @instance.attributes[:associate_public_ip] == true
+    end
+
+    test('#associate_public_ip = false') do
+      @instance.associate_public_ip = false
+      @instance.associate_public_ip == false
+    end
+    
   end
 
   tests('existing instance') do
@@ -40,6 +50,16 @@ Shindo.tests("Fog::Compute[:aws] | monitor", ['aws']) do
       @instance.monitoring == false
     end
 
+    test('#associate_public_ip = true') do
+      @instance.associate_public_ip = true
+      @instance.attributes[:associate_public_ip] == true
+    end
+
+    test('#associate_public_ip = false') do
+      @instance.associate_public_ip = false
+      @instance.associate_public_ip == false
+    end
+    
   end
 
   @instance.destroy
@@ -59,5 +79,4 @@ Shindo.tests("Fog::Compute[:aws] | monitor", ['aws']) do
 
     @instance.destroy
   end
-
 end
