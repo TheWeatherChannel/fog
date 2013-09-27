@@ -76,10 +76,12 @@ module Fog
 
       request :create_image
       request :list_images
+      request :list_images_detail
       request :get_image
       request :delete_image
 
       request :list_flavors
+      request :list_flavors_detail
       request :get_flavor
 
       request :attach_volume
@@ -146,8 +148,8 @@ module Fog
           @connection = Fog::Connection.new(endpoint_uri.to_s, @persistent, @connection_options)
         end
 
-        def request(params, parse_json = true, &block)
-          super(params, parse_json, &block)
+        def request(params, parse_json = true)
+          super
         rescue Excon::Errors::NotFound => error
           raise NotFound.slurp(error, self)
         rescue Excon::Errors::BadRequest => error
